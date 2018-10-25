@@ -1,0 +1,30 @@
+{
+
+  "urlFetchWhitelist": [
+    "https://github.com/login/oauth/authorize",
+    "https://api.github.com/repos/ponyesteves/help-desk/issues",
+     "https://github.com/login/oauth/access_token"
+    ],	
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+    "libraries": [{
+      "userSymbol": "OAuth2",
+      "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
+      "version": "30"
+    }]
+  },
+  "oauthScopes": ["https://www.googleapis.com/auth/gmail.addons.execute", "https://www.googleapis.com/auth/gmail.readonly","https://www.googleapis.com/auth/script.external_request"],
+  "gmail": {
+    "name": "Gmail Add-on Quickstart",
+    "logoUrl": "https://www.gstatic.com/images/icons/material/system/2x/bookmark_black_24dp.png",
+    "contextualTriggers": [{
+      "unconditional": {
+      },
+      "onTriggerFunction": "buildAddOn"
+    }],
+    "primaryColor": "#4285F4",
+    "secondaryColor": "#4285F4",
+    "openLinkUrlPrefixes": ["https://mail.google.com/", "https://github.com/login/oauth/authorize",
+    "https://api.github.com/repos/ponyesteves/help-desk/issues"]
+  }
+}

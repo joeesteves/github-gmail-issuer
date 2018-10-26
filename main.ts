@@ -4,7 +4,7 @@ interface Issue {
   title: string
   body: string
   state: string
-  url: string
+  html_url: string
 }
 
 function buildAddOn(e) {
@@ -90,7 +90,7 @@ function buildIssueCard(issue: Issue) {
   // )
 
   const threadLink = CardService.newOpenLink()
-    .setUrl(issue.url)
+    .setUrl(issue.html_url)
     .setOpenAs(CardService.OpenAs.FULL_SIZE)
   var button = CardService.newTextButton()
     .setText('Open Thread')

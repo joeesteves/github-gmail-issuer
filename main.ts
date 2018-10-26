@@ -35,8 +35,8 @@ function buildAddOn(e) {
   GmailApp.setCurrentMessageAccessToken(e.messageMetadata.accessToken)
   const messageId = e.messageMetadata.messageId,
     senderData = extractSenderData(messageId)
-  Logger.log(senderData)
-  if (!senderData) return [emptyCard()]
+
+    if (!senderData) return [emptyCard()]
   if (!senderData.company) return [emptyCard()]
 
   const resp = accessProtectedResource(
@@ -71,8 +71,14 @@ function emptyCard() {
 
 function extractSenderData(messageId) {
   const mail = GmailApp.getMessageById(messageId),
-    senderEmail = extractEmailAddress(mail.getFrom())
-  return issuers.filter(issuer => issuer.email == senderEmail)[0]
+    senderEmail = extractEmailAddress(mail.getFrom()),
+    receiversEmails = mail.getTo().split(",").map(mail => extractEmailAddress(mail))
+
+  return issuers.filter(issuer => issuer.email == senderEmail || include(issuer.email, receiversEmails))[0]
+}
+
+function include(item, collection){
+  return collection.filter(target => target == item).length > 0
 }
 
 function extractEmailAddress(sender) {

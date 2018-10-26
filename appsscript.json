@@ -20,7 +20,7 @@
     "https://www.googleapis.com/auth/script.external_request"
   ],
   "gmail": {
-    "name": "Gmail Add-on Quickstart",
+    "name": "GithubGmailIssuer by @Ceibo",
     "logoUrl": "https://www.gstatic.com/images/icons/material/system/2x/bookmark_black_24dp.png",
     "contextualTriggers": [
       {

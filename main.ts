@@ -36,13 +36,13 @@ function buildAddOn(e) {
   const messageId = e.messageMetadata.messageId,
     senderData = extractSenderData(messageId)
 
-    if (!senderData) return [emptyCard()]
+  if (!senderData) return [emptyCard()]
   if (!senderData.company) return [emptyCard()]
 
   const resp = accessProtectedResource(
     `https://api.github.com/repos/ponyesteves/help-desk/issues?labels=${
       senderData.company
-    }`
+    }&state=all`
   )
   const issues: Issue[] = JSON.parse(resp)
 
@@ -52,9 +52,7 @@ function buildAddOn(e) {
 
 function emptyCard() {
   return CardService.newCardBuilder()
-    .setHeader(
-      CardService.newCardHeader().setTitle('No related issues.... ;)')
-    )
+    .setHeader(CardService.newCardHeader().setTitle('No related issues.... ;)'))
     .addSection(
       CardService.newCardSection().addWidget(
         CardService.newButtonSet().addButton(
@@ -72,12 +70,18 @@ function emptyCard() {
 function extractSenderData(messageId) {
   const mail = GmailApp.getMessageById(messageId),
     senderEmail = extractEmailAddress(mail.getFrom()),
-    receiversEmails = mail.getTo().split(",").map(mail => extractEmailAddress(mail))
+    receiversEmails = mail
+      .getTo()
+      .split(',')
+      .map(mail => extractEmailAddress(mail))
 
-  return issuers.filter(issuer => issuer.email == senderEmail || include(issuer.email, receiversEmails))[0]
+  return issuers.filter(
+    issuer =>
+      issuer.email == senderEmail || include(issuer.email, receiversEmails)
+  )[0]
 }
 
-function include(item, collection){
+function include(item, collection) {
   return collection.filter(target => target == item).length > 0
 }
 
@@ -91,18 +95,28 @@ function extractEmailAddress(sender) {
   return email
 }
 
-function buildIssueCard(issue: Issue) {
-  const card = CardService.newCardBuilder().setHeader(
-    CardService.newCardHeader()
-      // .setImageUrl(
-      //   'https://cdn.iconscout.com/icon/free/png-256/issue-4-433271.png'
-      // )
-      .setTitle(`#${issue.number} ${issue.title}`)
-  )
-  const section = CardService.newCardSection()
-    .setHeader(`<font color="#1257e0">Issue #${issue.number}</font>`)
-    .addWidget(CardService.newTextParagraph().setText(issue.body))
+function asignHeaderIcon(status, header) {
+  if (status == 'closed')
+    return header.setImageUrl(
+      'https://cdn.iconscout.com/icon/premium/png-256-thumb/ticket-204-702128.png'
+    )
+  return header
+}
 
+function buildIssueCard(issue: Issue) {
+  const header = CardService.newCardHeader()
+    .setTitle(`#${issue.number} ${issue.title}`)
+    .setImageUrl(
+      'https://cdn.iconscout.com/icon/premium/png-256-thumb/ticket-205-702238.png'
+    )
+
+  const card = CardService.newCardBuilder().setHeader(
+    asignHeaderIcon(issue.state, header)
+  )
+
+  const section = CardService.newCardSection().addWidget(
+    CardService.newTextParagraph().setText(issue.body)
+  )
   const threadLink = CardService.newOpenLink()
     .setUrl(issue.html_url)
     .setOpenAs(CardService.OpenAs.FULL_SIZE)

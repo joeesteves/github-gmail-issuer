@@ -13,7 +13,7 @@
  *                             to the headers in this method.
  * @returns {HttpResponse} the result from the UrlFetchApp.fetch() call.
  */
-function accessProtectedResource(url, method_opt, headers_opt) {
+function accessProtectedResource(url, method: 'get' = 'get', headers = {}) {
   var service = getOAuthService();
   var maybeAuthorized = service.hasAccess();
   if (maybeAuthorized) {
@@ -22,8 +22,6 @@ function accessProtectedResource(url, method_opt, headers_opt) {
 
     // Make the UrlFetch request and return the result.
     var accessToken = service.getAccessToken();
-    var method = method_opt || 'get';
-    var headers = headers_opt || {};
     headers['Authorization'] =
         Utilities.formatString('Bearer %s', accessToken);
     var resp = UrlFetchApp.fetch(url, {
@@ -72,7 +70,7 @@ function accessProtectedResource(url, method_opt, headers_opt) {
  *  @returns A configured OAuth2 service object.
  */
 function getOAuthService() {
-  
+
   return OAuth2.createService('GITHUB')
       .setAuthorizationBaseUrl('https://github.com/login/oauth/authorize')
       .setTokenUrl('https://github.com/login/oauth/access_token')

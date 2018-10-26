@@ -101,7 +101,7 @@ function buildIssueCard(issue: Issue) {
     .setUrl(issue.html_url)
     .setOpenAs(CardService.OpenAs.FULL_SIZE)
   var button = CardService.newTextButton()
-    .setText('Go to Issue')
+    .setText('Open Issue')
     .setOpenLink(threadLink)
   section.addWidget(CardService.newButtonSet().addButton(button))
 

@@ -9,9 +9,11 @@ interface Issue {
 }
 
 function buildAddOn(e) {
-  const issues: Issue[] = JSON.parse(accessProtectedResource(
-    'https://api.github.com/repos/ponyesteves/help-desk/issues'
-  ))
+  const issues: Issue[] = JSON.parse(
+    accessProtectedResource(
+      'https://api.github.com/repos/ponyesteves/help-desk/issues'
+    )
+  )
 
   // Activate temporary Gmail add-on scopes.
   const accessToken = e.messageMetadata.accessToken
@@ -32,14 +34,12 @@ function buildAddOn(e) {
   return cards
 }
 
-function emptyCard(){
+function emptyCard() {
   CardService.newCardBuilder()
-  .setHeader(
-    CardService.newCardHeader().setTitle(
-      'No recent threads from this sender'
+    .setHeader(
+      CardService.newCardHeader().setTitle('No recent threads from this sender')
     )
-  )
-  .build()
+    .build()
 }
 /**
  *  This function builds a set of data about this sender's presence in your
@@ -68,8 +68,12 @@ function extractEmailAddress(sender) {
 }
 
 function buildIssueCard(issue: Issue) {
-  var card = CardService.newCardBuilder()
-  card.setHeader(CardService.newCardHeader().setTitle(issue.title))
+  const card = CardService.newCardBuilder().setHeader(
+
+    CardService.newCardHeader()
+    .setImageUrl("https://cdn.iconscout.com/icon/free/png-256/issue-4-433271.png")
+    .setTitle(`#${issue.number} ${issue.title}`)
+  )
   var section = CardService.newCardSection().setHeader(
     `<font color="#1257e0">Issue #${issue.number}</font>`
   )

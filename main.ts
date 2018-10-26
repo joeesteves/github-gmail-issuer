@@ -5,6 +5,7 @@ interface Issue {
   body: string
   state: string
   html_url: string
+  number: string
 }
 
 function buildAddOn(e) {
@@ -70,7 +71,7 @@ function buildIssueCard(issue: Issue) {
   var card = CardService.newCardBuilder()
   card.setHeader(CardService.newCardHeader().setTitle(issue.title))
   var section = CardService.newCardSection().setHeader(
-    '<font color="#1257e0">Issue #___</font>'
+    `<font color="#1257e0">Issue #${issue.number}</font>`
   )
   section.addWidget(CardService.newTextParagraph().setText(issue.body))
   // section.addWidget(
@@ -93,7 +94,7 @@ function buildIssueCard(issue: Issue) {
     .setUrl(issue.html_url)
     .setOpenAs(CardService.OpenAs.FULL_SIZE)
   var button = CardService.newTextButton()
-    .setText('Open Thread')
+    .setText('Go to Issue')
     .setOpenLink(threadLink)
   section.addWidget(CardService.newButtonSet().addButton(button))
 

@@ -9,23 +9,22 @@ interface Issue {
 let issuers
 
 function retrieveIssuers() {
-  Logger.log("RETRIEVING")
   return ContactsApp.getContactGroup('Issuers')
     .getContacts()
-    .map((contact) => {
-      return ({
+    .map(contact => {
+      return {
         email: contact.getPrimaryEmail(),
-        company: contact.getCompanies()[0].getCompanyName()
-      })
-  })
+        company: contact.getCompanies()[0].getCompanyName(),
+      }
+    })
 }
 
 function initIssuers() {
   let cacheObj = CacheService.getScriptCache(),
-    cacheIssuers = cacheObj.get("issuers")
-  if(!cacheIssuers){
-    cacheObj.put("issuers", JSON.stringify(retrieveIssuers()))
-    cacheIssuers = cacheObj.get("issuers")
+    cacheIssuers = cacheObj.get('issuers')
+  if (!cacheIssuers) {
+    cacheObj.put('issuers', JSON.stringify(retrieveIssuers()))
+    cacheIssuers = cacheObj.get('issuers')
   }
   return JSON.parse(cacheIssuers)
 }
@@ -54,7 +53,18 @@ function buildAddOn(e) {
 function emptyCard() {
   return CardService.newCardBuilder()
     .setHeader(
-      CardService.newCardHeader().setTitle('No recent threads from this sender')
+      CardService.newCardHeader().setTitle('No related issues.... ;)')
+    )
+    .addSection(
+      CardService.newCardSection().addWidget(
+        CardService.newButtonSet().addButton(
+          CardService.newTextButton()
+            .setText('Refresh Issuers Contacts')
+            .setOnClickAction(
+              CardService.newAction().setFunctionName('clearCache')
+            )
+        )
+      )
     )
     .build()
 }
@@ -83,10 +93,9 @@ function buildIssueCard(issue: Issue) {
       // )
       .setTitle(`#${issue.number} ${issue.title}`)
   )
-  var section = CardService.newCardSection().setHeader(
-    `<font color="#1257e0">Issue #${issue.number}</font>`
-  )
-  section.addWidget(CardService.newTextParagraph().setText(issue.body))
+  const section = CardService.newCardSection()
+    .setHeader(`<font color="#1257e0">Issue #${issue.number}</font>`)
+    .addWidget(CardService.newTextParagraph().setText(issue.body))
 
   const threadLink = CardService.newOpenLink()
     .setUrl(issue.html_url)
@@ -97,8 +106,8 @@ function buildIssueCard(issue: Issue) {
   section.addWidget(CardService.newButtonSet().addButton(button))
 
   var clearCacheBtn = CardService.newTextButton()
-  .setText('Update Contacts')
-  .setOnClickAction(CardService.newAction().setFunctionName("clearCache"))
+    .setText('Refresh Issuers Contacts')
+    .setOnClickAction(CardService.newAction().setFunctionName('clearCache'))
 
   section.addWidget(CardService.newButtonSet().addButton(clearCacheBtn))
 
@@ -106,6 +115,6 @@ function buildIssueCard(issue: Issue) {
   return card.build()
 }
 
-function clearCache() {
-  CacheService.getScriptCache().remove("issuers")
+function clearCache(e) {
+  CacheService.getScriptCache().remove('issuers')
 }

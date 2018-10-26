@@ -33,7 +33,8 @@
     "openLinkUrlPrefixes": [
       "https://mail.google.com/",
       "https://github.com/login/oauth/authorize",
-      "https://api.github.com/repos/ponyesteves/help-desk/issues"
+      "https://api.github.com/repos/ponyesteves/help-desk/issues",
+      "https://github.com/ponyesteves/help-desk/issues"
     ]
   }
 }

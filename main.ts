@@ -5,9 +5,11 @@ interface Issue {
   html_url: string
   number: string
 }
+
 let issuers
 
 function retrieveIssuers() {
+  Logger.log("RETRIEVING")
   return ContactsApp.getContactGroup('Issuers')
     .getContacts()
     .map((contact) => {
@@ -19,16 +21,22 @@ function retrieveIssuers() {
 }
 
 function initIssuers() {
-  return (issuers = issuers || retrieveIssuers())
+  let cacheObj = CacheService.getScriptCache(),
+    cacheIssuers = cacheObj.get("issuers")
+  if(!cacheIssuers){
+    cacheObj.put("issuers", JSON.stringify(retrieveIssuers()))
+    cacheIssuers = cacheObj.get("issuers")
+  }
+  return JSON.parse(cacheIssuers)
 }
 
 function buildAddOn(e) {
-  initIssuers()
+  issuers = initIssuers()
   // Activate temporary Gmail add-on scopes.
   GmailApp.setCurrentMessageAccessToken(e.messageMetadata.accessToken)
   const messageId = e.messageMetadata.messageId,
     senderData = extractSenderData(messageId)
-
+  Logger.log(senderData)
   if (!senderData) return [emptyCard()]
   if (!senderData.company) return [emptyCard()]
 
@@ -88,6 +96,16 @@ function buildIssueCard(issue: Issue) {
     .setOpenLink(threadLink)
   section.addWidget(CardService.newButtonSet().addButton(button))
 
+  var clearCacheBtn = CardService.newTextButton()
+  .setText('Update Contacts')
+  .setOnClickAction(CardService.newAction().setFunctionName("clearCache"))
+
+  section.addWidget(CardService.newButtonSet().addButton(clearCacheBtn))
+
   card.addSection(section)
   return card.build()
+}
+
+function clearCache() {
+  CacheService.getScriptCache().remove("issuers")
 }

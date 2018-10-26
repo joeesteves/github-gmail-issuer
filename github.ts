@@ -14,6 +14,7 @@
  * @returns {HttpResponse} the result from the UrlFetchApp.fetch() call.
  */
 function accessProtectedResource(url, method: 'get' = 'get', headers = {}) {
+  Logger.log(encodeURI(url))
   var service = getOAuthService();
   var maybeAuthorized = service.hasAccess();
   if (maybeAuthorized) {
@@ -24,7 +25,7 @@ function accessProtectedResource(url, method: 'get' = 'get', headers = {}) {
     var accessToken = service.getAccessToken();
     headers['Authorization'] =
         Utilities.formatString('Bearer %s', accessToken);
-    var resp = UrlFetchApp.fetch(url, {
+    var resp = UrlFetchApp.fetch(encodeURI(url), {
       'headers': headers,
       'method' : method,
       'muteHttpExceptions': true, // Prevents thrown HTTP exceptions.

@@ -1,0 +1,49 @@
+{
+  "url": "https://api.github.com/repos/ponyesteves/help-desk/issues/1",
+  "repository_url": "https://api.github.com/repos/ponyesteves/help-desk",
+  "labels_url": "https://api.github.com/repos/ponyesteves/help-desk/issues/1/labels{/name}",
+  "comments_url": "https://api.github.com/repos/ponyesteves/help-desk/issues/1/comments",
+  "events_url": "https://api.github.com/repos/ponyesteves/help-desk/issues/1/events",
+  "html_url": "https://github.com/ponyesteves/help-desk/issues/1",
+  "id": 374134043,
+  "node_id": "MDU6SXNzdWUzNzQxMzQwNDM=",
+  "number": 1,
+  "title": "Prueba Issue",
+  "user": {
+    "login": "ponyesteves",
+    "id": 4960589,
+    "node_id": "MDQ6VXNlcjQ5NjA1ODk=",
+    "avatar_url": "https://avatars2.githubusercontent.com/u/4960589?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/ponyesteves",
+    "html_url": "https://github.com/ponyesteves",
+    "followers_url": "https://api.github.com/users/ponyesteves/followers",
+    "following_url": "https://api.github.com/users/ponyesteves/following{/other_user}",
+    "gists_url": "https://api.github.com/users/ponyesteves/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/ponyesteves/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/ponyesteves/subscriptions",
+    "organizations_url": "https://api.github.com/users/ponyesteves/orgs",
+    "repos_url": "https://api.github.com/users/ponyesteves/repos",
+    "events_url": "https://api.github.com/users/ponyesteves/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/ponyesteves/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2018-10-25T21:10:00Z",
+  "updated_at": "2018-10-25T21:10:00Z",
+  "closed_at": null,
+  "author_association": "OWNER",
+  "body": "Hola Mundo",
+  "closed_by": null
+}

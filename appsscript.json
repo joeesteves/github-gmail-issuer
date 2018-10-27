@@ -21,8 +21,8 @@
     "https://www.google.com/m8/feeds"
   ],
   "gmail": {
-    "name": "GithubGmailIssuer by @Ceibo",
-    "logoUrl": "https://www.gstatic.com/images/icons/material/system/2x/bookmark_black_24dp.png",
+    "name": "Github Issuer by @Ceibo",
+    "logoUrl": "https://cdn.iconscout.com/icon/premium/png-64-thumb/giving-ticket-611183.png",
     "contextualTriggers": [
       {
         "unconditional": {},
@@ -35,7 +35,8 @@
       "https://mail.google.com/",
       "https://github.com/login/oauth/authorize",
       "https://api.github.com/repos/ponyesteves/help-desk/issues",
-      "https://github.com/ponyesteves/help-desk/issues"
+      "https://github.com/ponyesteves/help-desk/issues",
+      "https://user-images.githubusercontent.com/"
     ]
   }
 }

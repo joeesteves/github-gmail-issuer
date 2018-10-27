@@ -4,6 +4,7 @@ interface Issue {
   state: string
   html_url: string
   number: string
+  created_at: string
 }
 
 let issuers
@@ -114,13 +115,21 @@ function buildIssueCard(issue: Issue) {
     asignHeaderIcon(issue.state, header)
   )
 
-  const section = CardService.newCardSection().addWidget(
-    CardService.newTextParagraph().setText(issue.body.replace(/\!\[image\]\((https[^\!]*png)\)/g, ''))
-  )
+  const section = CardService.newCardSection()
+    .setHeader('Created:' + formatDate(new Date(issue.created_at)))
+    .addWidget(
+      CardService.newTextParagraph().setText(
+        issue.body.replace(/\!\[image\]\((https[^\!]*png)\)/g, '')
+      )
+    )
   const images = extractImagesFromBody(issue.body)
   images.forEach(link => {
     Logger.log(link)
-    section.addWidget(CardService.newImage().setImageUrl(link).setOpenLink(CardService.newOpenLink().setUrl(link)))
+    section.addWidget(
+      CardService.newImage()
+        .setImageUrl(link)
+        .setOpenLink(CardService.newOpenLink().setUrl(link))
+    )
   })
   const threadLink = CardService.newOpenLink()
     .setUrl(issue.html_url)

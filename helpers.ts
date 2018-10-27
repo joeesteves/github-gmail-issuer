@@ -6,3 +6,7 @@ function extractImagesFromBody(body: string): string[]{
   }
   return linkAry
 }
+
+function formatDate(date: Date) {
+  return date.toISOString().substr(0,10).split('-').reverse().join('/')
+}

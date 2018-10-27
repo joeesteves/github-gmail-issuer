@@ -5,6 +5,7 @@ interface Issue {
   html_url: string
   number: string
   created_at: string
+  closed_at: string | null
 }
 
 let issuers
@@ -116,7 +117,14 @@ function buildIssueCard(issue: Issue) {
   )
 
   const section = CardService.newCardSection()
-    .setHeader('Created: ' + formatDate(new Date(issue.created_at)))
+    .addWidget(
+      CardService.newTextParagraph().setText(
+        '<font color="#2cbe4e">Created: ' +
+          formatDate(issue.created_at) +
+          '</font><br><font color="#cb2431">Closed: ' +
+          formatDate(issue.closed_at)
+      )
+    )
     .addWidget(
       CardService.newTextParagraph().setText(
         issue.body.replace(/\!\[image\]\((https[^\!]*png)\)/g, '')

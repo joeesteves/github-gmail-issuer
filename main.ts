@@ -116,7 +116,7 @@ function buildIssueCard(issue: Issue) {
   )
 
   const section = CardService.newCardSection()
-    .setHeader('Created:' + formatDate(new Date(issue.created_at)))
+    .setHeader('Created: ' + formatDate(new Date(issue.created_at)))
     .addWidget(
       CardService.newTextParagraph().setText(
         issue.body.replace(/\!\[image\]\((https[^\!]*png)\)/g, '')
